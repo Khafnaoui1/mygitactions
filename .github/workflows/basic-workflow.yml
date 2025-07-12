@@ -1,0 +1,47 @@
+# This is a basic workflow that is manually trigged
+
+# Display name of workflow
+name: Basic Workflow
+
+# Controls when the action will run. Workflow runs when manually triggered using UI or API.
+on:
+  workflow_dispatch:
+    # inputs the workflow accepts.
+    inputs:
+      name:
+        # Friendly description to be shown in UI instead of 'name'
+        description: "Person to greet"
+        # Default value if no value is explicitly provided
+        default: "World"
+        # Input Type (string, choice, boolean)
+        type: string
+      city:
+        description: "Favorite city"
+        required: true
+        default: "Tupelo"
+        type: choice
+        options: 
+          - New York
+          - Seattle
+          - Tupelo
+      fav-color-blue:
+        description: "Is your favorite color blue"
+# A workflow run is made up of one or more jobs that can run sequentially or parallel        
+jobs:
+  # This workflow contains a single job called "greet"
+  greet: 
+    # Display name if the job
+    name: "Greeting, Program!"
+
+    # The type of runner that the job will run on, in this case a Linux hosted runner
+    runs-on:
+      - Ubuntu-lates
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Runs command(s) using the runners sell and gets context from github object
+      - name: Send greeting
+        run: |
+          echo "Hello ${{ github.event.inputs.name}}"
+          echo "Hello ${{ github.event.inputs.city}}"
+          echo "Hello ${{ github.event.inputs.fav-color-blue}}"
